@@ -1,0 +1,14 @@
+<div class="hero__categories">
+  <div class="hero__categories__all">
+    <i class="fa fa-bars"></i>
+    <span>All categories</span>
+  </div>
+  <ul>
+    <% categories.forEach(category => { %>
+    <li>
+      <a href="/categories/<%= category.id %>"><%= category.category_name %></a>
+    </li>
+
+    <% }) %>
+  </ul>
+</div>
