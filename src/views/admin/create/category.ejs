@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title>Nothing</title>
+  </head>
+
+  <body>
+    <%- include('../layout/header'); -%>
+    <!--//app-header-->
+
+    <div class="app-wrapper">
+      <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+          <h1 class="app-page-title">--</h1>
+          <h1 class="app-page-title">Add Admin</h1>
+
+          <div class="app-card app-card-settings shadow-sm p-4">
+            <%- message %>
+            <div class="app-card-body">
+              <form
+                class="settings-form"
+                method="post"
+                enctype="multipart/form-data"
+                action="/create/new-category"
+              >
+                <div class="mb-3">
+                  <label for="setting-input-1" class="form-label"
+                    >Category Name *</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="setting-input-1"
+                    name="category_name"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="setting-input-2" class="form-label"
+                    >Category image</label
+                  >
+                  <input
+                    type="file"
+                    required
+                    class="form-control"
+                    id="setting-input-2"
+                    name="category_image"
+                  />
+                </div>
+                <!-- <div class="mb-3">
+                  <label for="setting-input-3" class="form-label"
+                    >Role</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="setting-input-3"
+                    value="hello@companywebsite.com"
+                  />
+                </div> -->
+                <button type="submit" class="btn app-btn-primary">
+                  Save Changes
+                </button>
+              </form>
+            </div>
+            <!--//app-card-body-->
+          </div>
+          <!--//app-card-->
+        </div>
+        <!--//container-fluid-->
+      </div>
+      <!--//app-content-->
+
+      <%- include('../layout/footer') -%>
+    </div>
+    <!--//app-wrapper-->
+  </body>
+</html>

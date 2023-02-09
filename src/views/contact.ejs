@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Nothing</title>
+  </head>
+
+  <body>
+    <%- include('layouts/header'); -%>
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section bg-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <div class="breadcrumb__text">
+              <h2>Contact Us</h2>
+              <div class="breadcrumb__option">
+                <a href="/">Home</a>
+                <span>Contact Us</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Contact Section Begin -->
+    <section class="contact spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+            <div class="contact__widget">
+              <span class="icon_phone"></span>
+              <h4>Phone</h4>
+              <p><%= globalInfo.phoneNumber %></p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+            <div class="contact__widget">
+              <span class="icon_pin_alt"></span>
+              <h4>Address</h4>
+              <p><%= globalInfo.address %></p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+            <div class="contact__widget">
+              <span class="icon_clock_alt"></span>
+              <h4>Open time</h4>
+              <p><%= globalInfo.openTime %></p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+            <div class="contact__widget">
+              <span class="icon_mail_alt"></span>
+              <h4>Email</h4>
+              <p><%= globalInfo.companyEmail %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <!-- Map Begin -->
+    <div class="map">
+      <iframe
+        src="https://maps.google.com/maps?q=grace%20plaza&t=&z=19&ie=UTF8&iwloc=&output=embed"
+        height="500"
+        style="border: 0"
+        allowfullscreen=""
+        aria-hidden="false"
+        tabindex="0"
+      ></iframe>
+      <div class="map-inside">
+        <!-- <i class="icon_pin"></i> -->
+        <div class="inside-widget">
+          <h4>Addis Ababa</h4>
+          <ul>
+            <li>Phone: <%= globalInfo.phoneNumber %></li>
+            <li><%= globalInfo.address %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Map End -->
+
+    <!-- footer -->
+    <%- include('layouts/footer') -%>
+
+    <!-- plugins -->
+    <%- include('layouts/plugins') -%>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <title>Nothing</title>
+  </head>
+
+  <body>
+    <%- include('../layout/header'); -%>
+    <!--//app-header-->
+
+    <div class="app-wrapper">
+      <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+          <h1 class="app-page-title">--</h1>
+          <h1 class="app-page-title">ADD PRODUCT</h1>
+
+          <div class="app-card app-card-settings shadow-sm p-4">
+            <%- message %>
+            <div class="app-card-body">
+              <form
+                class="settings-form"
+                method="post"
+                enctype="multipart/form-data"
+                action="/create/new-product"
+              >
+                <div class="mb-3">
+                  <label for="setting-input-1" class="form-label"
+                    >Product Title *</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="setting-input-1"
+                    name="title"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="setting-input-1" class="form-label"
+                    >Product Desc *</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="setting-input-1"
+                    name="desc"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="setting-input-1" class="form-label"
+                    >Product Category *</label
+                  >
+                  <select name="category_id" class="form-select">
+                    <option>----</option>
+                    <% categories.forEach(category => { %>
+                    <option value="<%= category.id %>">
+                      <%= category.category_name %>
+                    </option>
+                    <% }) %>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="setting-input-2" class="form-label"
+                    >Product price</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="setting-input-2"
+                    name="price"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="setting-input-2" class="form-label"
+                    >In Stock</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="setting-input-2"
+                    name="stock"
+                    required
+                    value="100"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="setting-input-1" class="form-label"
+                    >Gender(for)
+                  </label>
+                  <select name="gender" class="form-select">
+                    <option value="both">
+                      <a href="/products?gender=both">both</a>
+                    </option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="setting-input-2" class="form-label"
+                    >Product brand</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="setting-input-2"
+                    name="brand"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="setting-input-2" class="form-label"
+                    >Product image</label
+                  >
+                  <input
+                    type="file"
+                    multiple
+                    required
+                    class="form-control"
+                    id="setting-input-2"
+                    name="image"
+                  />
+                </div>
+
+                <button type="submit" class="btn app-btn-primary">
+                  Post Product
+                </button>
+              </form>
+            </div>
+            <!--//app-card-body-->
+          </div>
+          <!--//app-card-->
+        </div>
+        <!--//container-fluid-->
+      </div>
+      <!--//app-content-->
+
+      <%- include('../layout/footer') -%>
+    </div>
+    <!--//app-wrapper-->
+  </body>
+</html>
