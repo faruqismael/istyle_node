@@ -1,7 +1,6 @@
 const Category = require("../models/Category");
 
 async function createCategory(category, req) {
-  console.log(Object(category), "---------------------------------");
   const newCategory = await Category.create(category);
   try {
     return newCategory;
