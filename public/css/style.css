@@ -2671,7 +2671,7 @@ ol {
 }
 
 .footer__widget ul {
-  width: 50%;
+  width: 100%;
   float: left;
 }
 
@@ -2720,7 +2720,7 @@ ol {
 .footer__widget .footer__widget__social a {
   display: inline-block;
   height: 41px;
-  width: 41px;
+  /* width: 41px; */
   font-size: 16px;
   color: #404040;
   border: 1px solid #ededed;
@@ -3486,4 +3486,12 @@ ol {
   .blog__details__hero__text h2 {
     font-size: 24px;
   }
+}
+
+.insta-link {
+  color: white;
+}
+
+.insta-link:hover {
+  color: rgb(210, 200, 200);
 }

@@ -5,6 +5,7 @@ const session = require("express-session");
 const bcrypt = require("bcryptjs");
 
 const infoController = require("./src/controllers/info");
+const settingController = require("./src/controllers/setting");
 const Info = require("./src/models/Info");
 const User = require("./src/models/User");
 const routes = require("./src/routes");
@@ -51,23 +52,44 @@ sequelize
     console.error("Unable to connect to the database: ", error);
   });
 
+// path to url convertor1
+function path2URL(p) {
+  p = p.replace("\\", "/");
+  p = p.split(" ").join("%20");
+  return p;
+}
+
 // Session-persisted message middleware
 
 app.use(async function (req, res, next) {
   const infos = await infoController.getInfo();
+  const setting = await settingController.getSetting();
   const categories = await Category.findAll();
   const products = await Product.findAll({ order: [["createdAt", "DESC"]] });
 
   const globalInfo = {};
+  const settings = {};
+
   infos.map((info) => (globalInfo[info.title] = info.value));
+  setting.map((stg) => (settings[stg.setting_name] = stg.setting_value));
+
+  if (!settings.logo) {
+    settings.logo = "static/img/istyle.png";
+  }
+
+  if (!settings["hero banner"]) {
+    settings["hero banner"] = "static/img/istyle-thin-header.png";
+  }
 
   res.locals.basic = {
     route: req.url,
   };
 
-  console.log("=================", products);
+  console.log("=================", settings.logo == null);
 
   res.locals.title = "ISTYLE";
+
+  res.locals.settings = settings;
 
   res.locals.globalInfo = globalInfo;
 
@@ -76,6 +98,8 @@ app.use(async function (req, res, next) {
 
   res.locals.categories = categories;
   res.locals.products = products;
+
+  res.locals.path2URL = path2URL;
 
   const err = req.session.error;
   const msg = req.session.success;
@@ -106,6 +130,6 @@ app.get("/", function (req, res) {
 
 /* istanbul ignore next */
 if (!module.parent) {
-  app.listen(3000);
+  app.listen(5000);
   console.log("Express started on port 3000");
 }

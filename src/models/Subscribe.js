@@ -2,9 +2,9 @@ const { Model, DataTypes } = require("sequelize");
 
 const sequelize = require("../database/connection");
 
-class Tag extends Model {}
+class Subscriber extends Model {}
 
-Tag.init(
+Subscriber.init(
   {
     // define columns
     id: {
@@ -13,26 +13,31 @@ Tag.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    tag_name: {
-      type: DataTypes.STRING,
+    phone_number: {
+      type: DataTypes.STRING(40),
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING(250),
+      allowNull: true,
     },
   },
   {
     sequelize,
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
-    underscored: true,
-    modelName: "tag",
+    underscored: false,
+    modelName: "subscribers",
   }
 );
 
 sequelize
   .sync()
   .then(() => {
-    console.log("Tag table created successfully!");
+    console.log("Subscriber table created successfully!");
   })
   .catch((error) => {
     console.error("Unable to create table : ", error.message);
   });
 
-module.exports = Tag;
+module.exports = Subscriber;

@@ -4,6 +4,8 @@ const Category = require("./Category");
 const Tag = require("./Tag");
 const ProductTag = require("./ProductTag");
 const User = require("./User");
+const Setting = require("./Setting");
+const Subscriber = require("./Subscribe");
 
 // User
 
@@ -36,4 +38,6 @@ module.exports = {
   Tag,
   ProductTag,
   User,
+  Subscriber,
+  Setting,
 };

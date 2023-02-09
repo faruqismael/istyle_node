@@ -37,4 +37,13 @@ ProductTag.init(
   }
 );
 
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Product Tag table created successfully!");
+  })
+  .catch((error) => {
+    console.error("Unable to create table : ", error.message);
+  });
+
 module.exports = ProductTag;

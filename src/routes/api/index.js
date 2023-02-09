@@ -4,11 +4,12 @@ const productRoutes = require("./product-routes");
 const userRoutes = require("./user-routes");
 const createRoutes = require("./create-routes");
 const adminRoutes = require("./admin-routes");
+const subscriberRoutes = require("./subscriber-routes");
 const { User } = require("../../models");
 const authController = require("../../controllers/auth");
 
 router.get("/", function (req, res) {
-  res.render("index");
+  res.render("index", { session: req.session });
 });
 
 router.get("/contact", function (req, res) {
@@ -44,7 +45,8 @@ router.post("/login", function (req, res, next) {
             user.email +
             ' click to <a href="/logout">logout</a>. ' +
             ' You may now access <a href="/admin">/admin</a>.';
-          res.redirect("/admin");
+          if (req.session.nextUrl) return res.redirect(req.session.nextUrl);
+          else res.redirect("/admin");
         });
       } else {
         req.session.error =
@@ -78,6 +80,11 @@ router.use("/categories", categoryRoutes);
 router.use("/products", productRoutes);
 router.use("/user", userRoutes);
 router.use("/create", createRoutes);
-router.use("/admin", authController.restrict, adminRoutes);
+router.use("/subscribe", subscriberRoutes);
+router.use(
+  "/admin",
+  // authController.restrict,
+  adminRoutes
+);
 
 module.exports = router;

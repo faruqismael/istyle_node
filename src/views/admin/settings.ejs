@@ -1,0 +1,237 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/css/settings.css" />
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="col-2">
+        <%- include('layout/header', {title: "Home"}); -%> <%-
+        include('layout/modal'); -%>
+      </div>
+      <div class="table-responsive col-6 py-5 my-5">
+        <%- message %>
+        <table class="py-4 table table-hover mb-0">
+          <thead>
+            <tr>
+              <th>Setting Name</th>
+              <th>Setting Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% settings.forEach(setting => { %>
+            <tr>
+              <td><%= setting.setting_name %></td>
+              <td><%= setting.setting_value %></td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  data-toggle="modal"
+                  data-target="#editSettingModal<%= setting.id %>"
+                  data-whatever="@fat"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-toggle="modal"
+                  data-target="#deleteSettingModal<%= setting.id %>"
+                  data-whatever="@fat"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+
+            <!-- delete modal -->
+            <div
+              class="modal fade"
+              id="deleteSettingModal<%= setting.id %>"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this setting?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      onclick="deleteItem(<%= setting.id %>, '/admin/setting/')"
+                      class="btn btn-primary"
+                    >
+                      Yes, delete
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- edit modal -->
+
+            <div
+              class="modal fade"
+              id="editSettingModal<%= setting.id %>"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Edit <%= setting.setting_name %>
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form
+                      method="post"
+                      action="/create/setting/<%= setting.id %>"
+                      enctype="multipart/form-data"
+                    >
+                      <div class="row">
+                        <div class="col-8">
+                          <div class="form-group">
+                            <label for="setting-name" class="col-form-label"
+                              >Setting Name:</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="setting-name"
+                              name="setting_name"
+                              value="<%= setting.setting_name %> "
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="setting-value" class="col-form-label"
+                              >Setting Value:</label
+                            >
+
+                            <input
+                              type="<%= setting.setting_type %>"
+                              name="setting_value"
+                              class="form-control"
+                              id="setting-value"
+                              value="<%= setting.setting_value %>"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <% if (setting.setting_type == "file") { %>
+                          <img
+                            src="/<%= setting.setting_value %>"
+                            width="100%"
+                          />
+                          <% } %>
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                          Save Setting
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="container col-4 py-5 my-5">
+        <div class="row gutters-sm">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-body tab-content">
+                <div class="tab-pane active" id="">
+                  <h6>New Setting</h6>
+                  <hr />
+                  <form method="post" action="/create/new-setting-name">
+                    <div class="form-group">
+                      <label for="settingName">Setting name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="settingName"
+                        name="setting_name"
+                        aria-describedby="settingNameHelp"
+                        placeholder="Enter setting name"
+                      />
+                      <small id="settingNameHelp" class="form-text text-muted"
+                        >You can set a new setting name as a global setting, and
+                        set it after you save it.</small
+                      >
+                    </div>
+                    <div class="form-group">
+                      <label for="settingType">Type</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="settingType"
+                        name="setting_type"
+                        aria-describedby="settingTypeHelp"
+                        placeholder="Setting type"
+                      />
+                      <small id="settingNameHelp" class="form-text text-muted"
+                        >this indicates the type of value to be set to a single
+                        setting</small
+                      >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/js/setting.js"></script>
+  </body>
+</html>

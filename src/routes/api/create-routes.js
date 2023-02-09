@@ -5,6 +5,7 @@ const categoryController = require("../../controllers/category");
 const { createUser } = require("../../controllers/user");
 const Category = require("../../models/Category");
 const Product = require("../../models/Product");
+const { Setting } = require("../../models");
 
 const router = express.Router();
 
@@ -68,6 +69,28 @@ router.post(
   }
 );
 
+// edit product
+router.post(
+  "/product/:id",
+  upload.single("image"),
+  async function (req, res, next) {
+    try {
+      req.body.image = req.file ? req.file.path.toString() : "";
+
+      await Product.update(req.body, {
+        where: { id: req.params.id },
+      });
+
+      req.session.success = "Product modified successfully";
+
+      return res.redirect("/admin/products");
+    } catch (error) {
+      req.session.error = error.message;
+      res.redirect("/admin/products");
+    }
+  }
+);
+
 // CATEGORIES ----
 router.get("/category", async function (req, res, next) {
   try {
@@ -98,6 +121,66 @@ router.post(
     } catch (error) {
       req.session.error = error.message;
       res.redirect("/create/category");
+    }
+  }
+);
+
+// edit setting
+router.post(
+  "/category/:id",
+  upload.single("category_image"),
+  async function (req, res, next) {
+    try {
+      req.body.category_image = req.file ? req.file.path.toString() : "";
+
+      await Category.update(req.body, {
+        where: { id: req.params.id },
+      });
+
+      req.session.success = "Category modified successfully";
+
+      return res.redirect("/admin/categories");
+    } catch (error) {
+      req.session.error = error.message;
+      res.redirect("/admin/categories");
+    }
+  }
+);
+
+router.post("/new-setting-name", async function (req, res, next) {
+  try {
+    const setting = await Setting.create(req.body);
+    console.log(req.body);
+
+    req.session.success = "Setting added successfully";
+
+    return res.redirect("/admin/settings");
+  } catch (error) {
+    req.session.error = error.message;
+    res.redirect("/admin/settings");
+  }
+});
+
+// edit setting
+router.post(
+  "/setting/:id",
+  upload.single("setting_value"),
+  async function (req, res, next) {
+    try {
+      req.body.setting_value = req.file ? req.file.path.toString() : "";
+
+      req.body.setting_name = req.body.setting_name.trim();
+
+      const setting = await Setting.update(req.body, {
+        where: { id: req.params.id },
+      });
+
+      req.session.success = "Setting modified successfully";
+
+      return res.redirect("/admin/settings");
+    } catch (error) {
+      req.session.error = error.message;
+      res.redirect("/admin/settings");
     }
   }
 );

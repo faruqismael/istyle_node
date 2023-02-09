@@ -21,6 +21,7 @@ function restrict(req, res, next) {
   if (req.session.user) {
     next();
   } else {
+    req.session.nextUrl = req.originalUrl;
     req.session.error = "Login to access " + req.originalUrl;
     res.redirect("/login?redirectTo=" + req.originalUrl);
   }
